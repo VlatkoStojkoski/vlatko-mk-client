@@ -13,13 +13,11 @@ jobs:
         python-version: '3.9'
     - run: python3 make_env.py .env.template .env API_URI ${{ secrets.API_URI }}
 
-    - name: ⬢ Setup Node
+    - name: 🏗 Build
       uses: actions/setup-node@v3
       with:
         node-version: 16.x
         cache: 'npm'
-
-    - name: 🏗 Build
     - run: npm install
     - run: npm run build
     
