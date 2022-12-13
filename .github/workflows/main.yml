@@ -13,7 +13,7 @@ jobs:
         python-version: '3.9'
 
     - name: Make .env file
-      run: python3 make_env.py .env.template .env API_URI ${{ secrets.API_URI }}
+      run: python3 make_env.py .env.example .env API_URI ${{ secrets.API_URI }}
 
     - name: ⬢ Setup Node
       uses: actions/setup-node@v3
