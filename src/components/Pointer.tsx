@@ -37,8 +37,8 @@ const Pointer = () => {
 	}, [x,y]);
 
 	return (
-		<div className={`pointer-container fixed z-50 w-screen h-screen top-0 left-0
-										 pointer-events-none`}>
+		<div className={`pointer-container fixed z-50 w-screen h-screen top-0 left-0 pointer-events-none
+										 ${pointer === 'filled' ? ' mix-blend-hard-light' : ''}`}>
 			<div
 				className={`border-stone-900 border-2 absolute top-0 left-0 rounded-full -translate-x-1/2 -translate-y-1/2
 										pointer-events-none`}
@@ -51,7 +51,7 @@ const Pointer = () => {
 				}}>
 				<div
 					className={`bg-stone-900 absolute rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none
-												${pointer === 'filled' ? 'w-[calc(100%+2px)] h-[calc(100%+2px)]' : 'w-2 h-2'}`}
+											${pointer === 'filled' ? 'w-[calc(100%+2px)] h-[calc(100%+2px)]' : 'w-2 h-2'}`}
 					style={{
 						top: '50%',
 						left: '50%',
