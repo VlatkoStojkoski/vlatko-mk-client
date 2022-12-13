@@ -7,7 +7,7 @@ import { z } from 'zod';
  */
 export const serverSchema = z.object({
 	NODE_ENV: z.enum(['development', 'test', 'production']),
-	STRAPI_URI: z.string(),
+	API_URI: z.string(),
 });
 
 /**
@@ -16,7 +16,7 @@ export const serverSchema = z.object({
  * To expose them to the client, prefix them with `NEXT_PUBLIC_`.
  */
 export const clientSchema = z.object({
-	NEXT_PUBLIC_STRAPI_URI: z.string(),
+	NEXT_PUBLIC_API_URI: z.string(),
 });
 
 /**
@@ -26,5 +26,5 @@ export const clientSchema = z.object({
  * @type {{ [k in keyof z.infer<typeof clientSchema>]: z.infer<typeof clientSchema>[k] | undefined }}
  */
 export const clientEnv = {
-	NEXT_PUBLIC_STRAPI_URI: process.env.NEXT_PUBLIC_STRAPI_URI,
+	NEXT_PUBLIC_API_URI: process.env.NEXT_PUBLIC_API_URI,
 };

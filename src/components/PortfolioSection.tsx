@@ -26,7 +26,7 @@ const PortfolioSection: React.FC<{
 							<div className='w-full h-32 relative'>
 								<Image
 									className='object-cover'
-									src={env.NEXT_PUBLIC_STRAPI_URI + attributes.thumbnail.data.attributes.formats.small.url}
+									src={env.NEXT_PUBLIC_API_URI + attributes.thumbnail.data.attributes.formats.small.url}
 									alt='Project thumbnail'
 									fill />
 							</div>
