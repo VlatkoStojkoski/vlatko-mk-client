@@ -7,17 +7,21 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: 🐍 Python
+    - name: 🐍 Setup Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.9'
+
+    - name: Make .env file
       run: python3 make_env.py .env.template .env API_URI ${{ secrets.API_URI }}
 
-    - name: 🏗 Build
+    - name: ⬢ Setup Node
       uses: actions/setup-node@v3
       with:
         node-version: 16.x
         cache: 'npm'
+
+    - name: 🏗 Build
       run: npm install
       run: npm run build
     
