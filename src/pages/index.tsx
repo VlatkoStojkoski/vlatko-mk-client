@@ -1,5 +1,6 @@
 import React from 'react';
 
+import type { InferGetServerSidePropsType} from 'next';
 import { type NextPage } from 'next';
 import Head from 'next/head';
 
@@ -10,9 +11,9 @@ import HomeSection from 'components/HomeSection';
 import Navbar from 'components/Navbar';
 import Pointer from 'components/Pointer';
 import PortfolioSection from 'components/PortfolioSection';
-import { trpc } from 'utils/trpc';
+import { trpcClient } from 'utils/trpc';
 
-const Home: NextPage = () => {
+const Home: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({projects}) => {
 	return (
 		<>
 			<Head>
@@ -30,7 +31,7 @@ const Home: NextPage = () => {
 			<main className='px-5'>
 				<HomeSection />
 
-				<PortfolioSection />
+				<PortfolioSection projects={projects} />
 
 				<ContactSection />
 			</main>
@@ -38,6 +39,16 @@ const Home: NextPage = () => {
 			<Footer />
 		</>
 	);
+};
+
+export const getServerSideProps = async () => {
+	const data = await trpcClient.projects.getAll.query();
+
+	return {
+		props: {
+			projects: data,
+		},
+	};
 };
 
 export default Home;

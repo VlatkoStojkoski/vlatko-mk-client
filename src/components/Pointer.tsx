@@ -1,11 +1,8 @@
 'use client';
 import React from 'react';
 
-import { flushSync } from 'react-dom';
-
 import { usePointerContext } from 'context/pointer';
 import useMousePosition from 'hooks/useMousePositions';
-import isMobile from 'utils/isMobile';
 
 const Pointer = () => {
 	const {x, y} = useMousePosition();
@@ -24,6 +21,20 @@ const Pointer = () => {
 
 		window.addEventListener('mouseup', mouseUp);
 	}, []);
+
+	React.useEffect(() => {
+		const hoveringElements = document
+			.elementsFromPoint(x, y)
+			.filter((el) => (el as HTMLElement).dataset.hover);
+
+		hoveringElements.map(el => el.addEventListener('mouseleave', () => {
+			setPointer('normal');
+		}));
+		
+		if (hoveringElements.length > 0) {
+			setPointer('filled');
+		}
+	}, [x,y]);
 
 	return (
 		<div className={`pointer-container fixed z-50 w-screen h-screen top-0 left-0

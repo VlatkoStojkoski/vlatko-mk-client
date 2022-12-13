@@ -4,14 +4,13 @@ import {LogoGithub, ContentView, Link as LinkIcon} from '@carbon/icons-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { usePointerContext } from 'context/pointer';
 import { env } from 'env/client.mjs';
-import { trpc } from 'utils/trpc';
 
-const PortfolioSection = () => {
-	const {data: getAllData} = trpc.projects.getAll.useQuery();
-	const [pointer, setPointer] = usePointerContext();
-	
+const PortfolioSection: React.FC<{
+	projects: {
+		data: any[];
+	}
+}> = ({projects}) => {
 	return (
 		<section id='portfolio' className='min-h-screen py-5'>
 			<h1 className='text-4xl font-semibold mb-5'>Portfolio</h1>
@@ -21,8 +20,8 @@ const PortfolioSection = () => {
 				gridGap: '16px',
 			}}>
 				{
-					getAllData &&
-					getAllData.data?.map(({attributes}: any, projIdx: any) => (
+					projects &&
+					projects?.data?.map(({attributes}: any, projIdx: any) => (
 						<div className='bg-white p-4' key={projIdx}>
 							<div className='w-full h-32 relative'>
 								<Image
@@ -55,8 +54,7 @@ const PortfolioSection = () => {
 												href={href}
 												className='bg-gray-200 px-3 py-1 text-sm font-semibold text-gray-700'
 												target='_blank'
-												onMouseOver={() => setPointer('filled')}
-												onMouseLeave={() => setPointer('normal')}>
+												data-hover>
 												{
 													(() => {
 														switch(type) {
