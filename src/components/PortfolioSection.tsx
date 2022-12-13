@@ -4,8 +4,8 @@ import {LogoGithub, ContentView, Link as LinkIcon} from '@carbon/icons-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-
 import { usePointerContext } from 'context/pointer';
+import { env } from 'env/client.mjs';
 import { trpc } from 'utils/trpc';
 
 const PortfolioSection = () => {
@@ -27,7 +27,7 @@ const PortfolioSection = () => {
 							<div className='w-full h-32 relative'>
 								<Image
 									className='object-cover'
-									src={'http://localhost:1337' + attributes.thumbnail.data.attributes.formats.small.url}
+									src={env.NEXT_PUBLIC_STRAPI_URI + attributes.thumbnail.data.attributes.formats.small.url}
 									alt='Project thumbnail'
 									fill />
 							</div>
