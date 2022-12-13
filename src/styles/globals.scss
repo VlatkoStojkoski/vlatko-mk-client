@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('/assets/fonts/font-faces.css');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,700;1,400&display=swap');
+
+html {
+	scroll-behavior: smooth;
+	scroll-padding-top: 4rem;
+	font-family: 'M Ying Hei PRC', sans-serif;
+}
+
+p,
+button,
+label,
+a {
+	font-family: 'Modernist', sans-serif;
+}
+
+@media only screen and (max-width: 768px) {
+
+	.pointer-container,
+	.creepy-image-container {
+		display: none;
+	}
+
+	html,
+	*:hover {
+		cursor: inherit;
+	}
+}
+
+@media only screen and (min-width: 768px) {
+
+	html,
+	*:hover {
+		cursor: none;
+	}
+}
