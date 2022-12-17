@@ -3,6 +3,7 @@ import React from 'react';
 import {LogoGithub, ContentView, Link as LinkIcon} from '@carbon/icons-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { z } from 'zod';
 
 import { env } from 'env/client.mjs';
 

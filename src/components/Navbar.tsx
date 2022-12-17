@@ -15,7 +15,11 @@ const PAGE_CONF = [{
 },
 {
 	name: 'contact',
-	href: '/#contact',
+	href: '#contact',
+},
+{
+	name: 'blog',
+	href: '/blog',
 }];
 
 const Navbar: React.FC = () => {

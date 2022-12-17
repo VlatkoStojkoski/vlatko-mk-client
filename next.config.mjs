@@ -13,7 +13,7 @@ const config = {
 		defaultLocale: 'en',
 	},
 	images: {
-		domains: ['localhost'],
+		domains: ['localhost', 'strapi.vlatko.mk'],
 	},
 };
 export default config;
