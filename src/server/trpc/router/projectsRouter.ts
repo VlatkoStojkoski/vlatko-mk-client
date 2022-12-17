@@ -140,7 +140,7 @@ export const getProjects = async ({ axios }: { axios: AxiosInstance }) => {
 		});
 	}
 
-	return data;
+	return data as ZodInfer<typeof projectsDataScheme>;
 };
 
 export const projectsRouter = router({
