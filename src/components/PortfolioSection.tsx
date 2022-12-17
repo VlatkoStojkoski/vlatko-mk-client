@@ -3,15 +3,11 @@ import React from 'react';
 import {LogoGithub, ContentView, Link as LinkIcon} from '@carbon/icons-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { z } from 'zod';
 
 import { env } from 'env/client.mjs';
+import type { RouterOutputs } from 'utils/trpc';
 
-const PortfolioSection: React.FC<{
-	projects: {
-		data: any[];
-	}
-}> = ({projects}) => {
+const PortfolioSection: React.FC<{projects: RouterOutputs['projects']['getAll'] }> = ({projects}) => {
 	return (
 		<section id='portfolio' className='min-h-screen py-5'>
 			<h1 className='text-4xl font-semibold mb-5'>Portfolio</h1>
@@ -22,7 +18,7 @@ const PortfolioSection: React.FC<{
 			}}>
 				{
 					projects &&
-					projects?.data?.map(({attributes}: any, projIdx: any) => (
+					projects.data.map(({attributes}, projIdx) => (
 						<div className='bg-white p-4' key={projIdx}>
 							<div className='w-full h-32 relative'>
 								<Image
@@ -48,8 +44,11 @@ const PortfolioSection: React.FC<{
 								</p>
 								<div className='flex gap-2 my-3'>
 									{
-										attributes.links.split(', ').map((link: any, linkIdx: any) => {
-											const [type, href] = link.match(/(?<=\[).+(?=\))/)[0].split('](');
+										attributes.links.split(', ').map((link, linkIdx) => {
+											const linkMatch = link.match(/(?<=\[).+(?=\))/);
+											if (!linkMatch || !linkMatch[0]) return null;
+
+											const [type, href] = linkMatch[0].split('](') as [string, string];
 											return <Link
 												key={linkIdx}
 												href={href}

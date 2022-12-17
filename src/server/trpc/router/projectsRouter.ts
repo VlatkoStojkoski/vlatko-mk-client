@@ -146,19 +146,21 @@ export const getProjects = async ({ axios }: { axios: AxiosInstance }) => {
 export const projectsRouter = router({
 	getAll: publicProcedure
 		.query(async ({ ctx }) => {
-			let data: unknown | null = null;
+			let data: ZodInfer<typeof projectsDataScheme> | null = null;
 
 			try {
 				data = await getProjects({ axios: ctx.axios });
 				return data;
 			} catch (error) {
 				console.error(error);
-				return [];
+				return {
+					data: [],
+				};
 			}
 		}),
 	getById: publicProcedure
 		.input(z.object({ id: z.string() }))
-		.query(({ input, ctx }) => {
+		.query(({ input }) => {
 			return {
 				greeting: 'Hello, World!',
 				id: input.id,

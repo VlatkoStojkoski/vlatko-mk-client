@@ -4,7 +4,6 @@ import type { InferGetServerSidePropsType} from 'next';
 import { type NextPage } from 'next';
 import Head from 'next/head';
 
-import ContactSection from 'components/ContactSection';
 import CreepyImage from 'components/CreepyImage';
 import HomeSection from 'components/HomeSection';
 import PortfolioSection from 'components/PortfolioSection';
