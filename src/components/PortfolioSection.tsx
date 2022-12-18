@@ -1,6 +1,7 @@
 import React from 'react';
 
 import {LogoGithub, ContentView, Link as LinkIcon} from '@carbon/icons-react';
+import color from 'color';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -29,14 +30,19 @@ const PortfolioSection: React.FC<{projects: RouterOutputs['projects']['getAll'] 
 							</div>
 							<div className='px-4 pt-2'>
 								<div className='flex gap-2 my-3'>
-									{(attributes.tags as string).split(',').map((tag, tagIdx) => (
-										<span
-											key={tagIdx}
-											className='rounded-full px-3 py-1 text-sm font-semibold text-gray-700'
-											style={{background: `#${tag.split('#')[1]}`}}>
-											{tag.split('#')[0]}
-										</span>
-									))}
+									{(attributes.tags as string).split(',').map((tag, tagIdx) => {
+										const hexCode = `#${tag.split('#')[1]}`;
+										const textColor = color(hexCode).isDark() ? 'white' : 'black';
+
+										return (
+											<span
+												key={tagIdx}
+												className='rounded-full px-3 py-1 text-sm font-semibold'
+												style={{background: hexCode, color: textColor}}>
+												{tag.split('#')[0]}
+											</span>
+										);
+									})}
 								</div>
 								<h2 className='text-xl font-semibold text-gray-800'>{attributes.title}</h2>
 								<p className='text-gray-700'>

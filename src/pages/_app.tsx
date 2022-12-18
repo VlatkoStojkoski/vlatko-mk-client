@@ -3,7 +3,6 @@ import { type AppType } from 'next/app';
 import { trpc } from '../utils/trpc';
 
 import '../styles/globals.scss';
-import ContactSection from 'components/ContactSection';
 import Footer from 'components/Footer';
 import Navbar from 'components/Navbar';
 import Pointer from 'components/Pointer';
@@ -14,7 +13,6 @@ const MyApp: AppType = ({ Component, pageProps }) => {
 		<Navbar />
 		<Pointer />
 		<Component {...pageProps} />
-		<ContactSection />
 		<Footer />
 	</PointerProvider>;
 };
