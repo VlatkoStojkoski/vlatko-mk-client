@@ -1,9 +1,14 @@
 import React from 'react';
 
 import Head from 'next/head';
-import type { NextPage } from 'next/types';
+import Link from 'next/link';
+import type { InferGetServerSidePropsType, NextPage } from 'next/types';
 
-const Blog: NextPage = () => {
+import { trpcClient } from 'utils/trpc';
+
+const Blog: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({blogPosts}) => {
+	console.log(blogPosts);
+
 	return (
 		<>
 			<Head>
@@ -12,18 +17,33 @@ const Blog: NextPage = () => {
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
 
-			<main className='px-5 pt-20 min-h-screen'>
-				<h1 className='text-5xl font-bold'>Blog posts</h1>
-				<div style={{
-					display: 'grid',
-					gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-					gridGap: '16px',
-				}}>
-					lol
+			<main className='px-5 pt-20 min-h-screen max-w-3xl mx-auto'>
+				<h1 className='text-5xl font-bold mb-6 text-center'>Blog posts</h1>
+				<div className='flex flex-col gap-5'>
+					{
+						blogPosts.data.map((blogPost, blogPostIdx) => (
+							<Link key={blogPostIdx} href={`/blog/${blogPost.attributes.slug}`} className="text-gray-700 hover:underline" data-hover>
+								<div className='bg-white shadow-lg p-5'>
+									<h2 className='text-black text-2xl font-bold'>{blogPost.attributes.title}</h2>
+									<p className='text-gray-500'>{blogPost.attributes.short}</p>
+								</div>
+							</Link>
+						))
+					}
 				</div>
 			</main>
 		</>
 	);
+};
+
+export const getServerSideProps = async () => {
+	const data = await trpcClient.blogPosts.getAll.query();
+
+	return {
+		props: {
+			blogPosts: data,
+		},
+	};
 };
 
 export default Blog;

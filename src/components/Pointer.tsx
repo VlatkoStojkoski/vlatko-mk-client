@@ -25,7 +25,7 @@ const Pointer = () => {
 	React.useEffect(() => {
 		const hoveringElements = document
 			.elementsFromPoint(x, y)
-			.filter((el) => (el as HTMLElement).dataset.hover);
+			.filter((el) => (el as HTMLElement).dataset.hover || el.tagName === 'A');
 
 		hoveringElements.map(el => el.addEventListener('mouseleave', () => {
 			setPointer('normal');

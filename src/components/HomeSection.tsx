@@ -1,15 +1,14 @@
 import React from 'react';
 
-import Image from 'next/image';
 import Link from 'next/link';
 
 import { type PointerContextType, usePointerContext } from 'context/pointer';
 
-const HomeSection = () => {
+const HomeSection = (props: React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>) => {
 	const [pointer, setPointer] = usePointerContext() as PointerContextType;
 
 	return (
-		<section id='home' className='flex min-h-screen flex-col items-center justify-center text-center'>
+		<section id='home' className='flex min-h-screen flex-col items-center justify-center text-center' {...props}>
 			<h1 className='text-5xl sm:text-6xl font-bold'>
 					Vlatko Stojkoski
 			</h1>

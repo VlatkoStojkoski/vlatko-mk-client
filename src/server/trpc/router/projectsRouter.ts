@@ -4,51 +4,9 @@ import qs from 'qs';
 import type { infer as ZodInfer } from 'zod';
 import { z } from 'zod';
 
+import type { IsAxiosError } from '../error';
+import { StrapiOrAxiosError } from '../error';
 import { router, publicProcedure } from '../trpc';
-
-type IsAxiosError = {
-	isAxiosError: true;
-	status?: number;
-}
-
-type IsStrapiError = {
-	isStrapiError: true;
-	issues?: z.ZodIssue[];
-}
-
-class StrapiOrAxiosError extends Error {
-	isAxiosError = false;
-	isStrapiError = false;
-	message = '';
-	status = 0;
-	data: unknown = null;
-	issues: z.ZodIssue[] = [];
-
-	constructor(errorObj: {
-		message: string;
-		data: unknown;
-	} & (IsAxiosError | IsStrapiError)) {
-		super(errorObj.message);
-
-		Object.setPrototypeOf(this, StrapiOrAxiosError.prototype);
-
-		this.message = errorObj.message;
-		this.data = errorObj.data;
-
-		if ('isAxiosError' in errorObj && errorObj.isAxiosError) {
-			this.name = 'AxiosError';
-			this.isAxiosError = true;
-			if (errorObj.status) this.status = errorObj.status;
-			if (errorObj.data) this.data = errorObj.data;
-		}
-
-		if ('isStrapiError' in errorObj && errorObj.isStrapiError) {
-			this.name = 'StrapiError';
-			this.isStrapiError = true;
-			this.issues = errorObj.issues ?? [];
-		}
-	}
-}
 
 const projectScheme = z.object({
 	attributes: z.object({
@@ -65,14 +23,8 @@ const projectScheme = z.object({
 				}),
 			}),
 		}),
-		blog_post: z.object({
-			data: z.object({
-				attributes: z.object({
-					short: z.string(),
-				}),
-			}),
-		}),
 		links: z.string(),
+		short: z.string(),
 	}),
 });
 
@@ -94,6 +46,7 @@ export const getProjects = async ({ axios }: { axios: AxiosInstance }) => {
 		);
 
 		const res = await axios.get(`/projects?${query}`);
+		console.log(JSON.stringify(res.data, null, 2));
 		data = res.data;
 	} catch (error: unknown) {
 		if (!(error instanceof AxiosError))

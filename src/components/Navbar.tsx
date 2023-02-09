@@ -1,12 +1,25 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { flushSync } from 'react-dom';
 
+import type { NavbarContextType} from 'context/navbar';
+import { useNavbarContext , Navbar as NavbarType} from 'context/navbar';
 import { usePointerContext } from 'context/pointer';
+import useScrollPosition from 'hooks/useScrollPosition';
+import { isInRange } from 'utils/numbers';
 
-const PAGE_CONF = [{
+type ActiveName = NavbarContextType['0']['active'];
+
+type LinksType = {
+	name: ActiveName,
+	href: string,
+	scroll?: boolean
+}[]
+
+const links: LinksType = [{
 	name: 'home',
 	href: '/#home',
 },
@@ -25,29 +38,24 @@ const PAGE_CONF = [{
 }];
 
 const Navbar: React.FC = () => {
-	const [active, setActive] = useState<string | null>(null);
 	const [pointer, setPointer] = usePointerContext();
+	const [navbar, setNavbar] = useNavbarContext();
+	const scrollPostion = useScrollPosition();
 	const router = useRouter();
-
-	useEffect(() => {
-		const changeActive = (url: string) => setActive(PAGE_CONF.find(item => item.href === url)?.name || 'home');
-		changeActive(router.asPath);
-		router.events.on('routeChangeComplete', changeActive);
-	}, []);
 
 	return (
 	 	<nav className={`bg-cobalt-blue-900 bg-opacity-80 w-100 text-slate-50 text-xl 
 										 py-4 fixed top-0 left-0 w-full z-30 backdrop-blur-[2px]`}>
 			<ul className='list-none flex flex-row gap-x-6 w-fit mx-auto'>
 				{
-					PAGE_CONF.map((item, index) => {
+					links.map((item, index) => {
 						return (
 							<li key={index} data-hover>
 								<Link 
 									href={item.href} 
-									className={item.name === active ? 'font-bold' : ''} 
+									className={item.name === navbar.active ? 'font-bold' : ''} 
 									onClick={() => {
-										setActive(item.name);
+										setNavbar((prev) => ({ ...prev, active: item.name }));
 										router.events.emit('routeChangeComplete', item.href);
 									}}
 									scroll={item.scroll || false}
