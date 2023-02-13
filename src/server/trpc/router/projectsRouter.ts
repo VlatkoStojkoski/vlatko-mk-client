@@ -11,7 +11,14 @@ import { router, publicProcedure } from '../trpc';
 const projectScheme = z.object({
 	attributes: z.object({
 		title: z.string(),
-		tags: z.string(),
+		tags: z.object({
+			data: z.array(z.object({
+				attributes: z.object({
+					name: z.string(),
+					color: z.string(),
+				}),
+			})),
+		}),
 		thumbnail: z.object({
 			data: z.object({
 				attributes: z.object({
@@ -23,7 +30,7 @@ const projectScheme = z.object({
 				}),
 			}),
 		}),
-		links: z.string(),
+		links: z.array(z.array(z.string()).length(2)),
 		short: z.string(),
 	}),
 });
@@ -39,6 +46,7 @@ export const getProjects = async ({ axios }: { axios: AxiosInstance }) => {
 		const query = qs.stringify(
 			{
 				populate: '*',
+				sort: 'priority:asc',
 			},
 			{
 				encodeValuesOnly: true,
@@ -46,7 +54,8 @@ export const getProjects = async ({ axios }: { axios: AxiosInstance }) => {
 		);
 
 		const res = await axios.get(`/projects?${query}`);
-		console.log(JSON.stringify(res.data, null, 2));
+		console.log('res.data', JSON.stringify(res.data, null, 2));
+		console.log('tags', JSON.stringify(res.data.data.map((p: any) => p.attributes.tags), null, 2));
 		data = res.data;
 	} catch (error: unknown) {
 		if (!(error instanceof AxiosError))
