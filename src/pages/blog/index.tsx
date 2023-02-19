@@ -19,15 +19,15 @@ const Blog: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
 
-			<main className='px-5 pt-20 min-h-screen max-w-3xl mx-auto'>
+			<main className='px-5 pt-20 min-h-screen max-w-3xl mx-auto mb-10'>
 				<h1 className='text-5xl font-bold mb-6 text-center'>Blog posts</h1>
 				<div className='flex flex-col gap-5'>
 					{
 						blogPosts.data.map((blogPost, blogPostIdx) => (
 							<Link key={blogPostIdx} href={`/blog/${blogPost.attributes.slug}`} className="text-gray-700 hover:underline" data-hover>
 								<div className='bg-white shadow-lg p-5'>
-									<h2 className='text-black text-2xl font-heading font-bold'>{blogPost.attributes.title}</h2>
-									<p className='text-gray-700 text-lg'>{blogPost.attributes.short}</p>
+									<h2 className='text-black text-2xl font-heading font-bold mb-2'>{blogPost.attributes.title}</h2>
+									<p className='text-gray-700 font-normal text-base'>{blogPost.attributes.short}</p>
 								</div>
 							</Link>
 						))

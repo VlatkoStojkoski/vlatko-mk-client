@@ -30,6 +30,7 @@ export const getBlogPosts = async ({ axios }: { axios: AxiosInstance }) => {
 		const query = qs.stringify(
 			{
 				populate: '*',
+				sort: ['createdAt:desc'],
 			},
 			{
 				encodeValuesOnly: true,
@@ -109,8 +110,10 @@ export const blogPostsRouter = router({
 			try {
 				const query = qs.stringify(
 					{
-						'filters[slug]': input.slug,
 						populate: '*',
+						filters: {
+							slug: input.slug,
+						},
 					},
 					{
 						encodeValuesOnly: true,

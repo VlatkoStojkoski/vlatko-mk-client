@@ -9,7 +9,7 @@ const ContactSection = () => {
 	const [pointer, setPointer] = usePointerContext();
 	
 	return (
-		<section id='contact' className='flex items-center justify-center flex-col min-h-[80vh] max-w-[600px] mx-auto py-5'>
+		<section id='contact' className='flex items-center justify-center flex-col min-h-[80vh] max-w-[600px] mx-auto py-10'>
 			<div className='flex flex-col items-center justify-center text-center mb-4'>
 				<h1 className='text-5xl sm:text-6xl font-bold'>
 					Contact
