@@ -25,6 +25,8 @@ const Blog: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
 
+			{(() => {console.log(blogPost.attributes);})()}
+
 			<main className='px-5 pt-28 pb-32 min-h-screen max-w-4xl mx-auto'>
 				<h1 className='text-4xl sm:text-5xl font-bold mb-6 underline'>{blogPost.attributes.title}</h1>
 				<div id='blog-content'>
