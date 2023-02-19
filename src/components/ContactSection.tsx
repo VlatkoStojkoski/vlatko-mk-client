@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Image from 'next/image';
+
 import { usePointerContext } from 'context/pointer';
 
 const ContactSection = () => {
@@ -10,13 +12,17 @@ const ContactSection = () => {
 	
 	return (
 		<section id='contact' className='flex items-center justify-center flex-col min-h-[80vh] max-w-[600px] mx-auto py-10'>
-			<div className='flex flex-col items-center justify-center text-center mb-4'>
+			<div className='flex flex-col items-center justify-center text-center mb-8'>
 				<h1 className='text-5xl sm:text-6xl font-bold'>
 					Contact
 				</h1>
 				<p className='mt-3 text-2xl'>
 					Feel free to contact me
 				</p>
+				<div className='mt-3'>
+					<Image src='/assets/img/email.gif' className='inline-block mr-3' alt='email icon' width={40} height={40} />
+					<span>vlatko@stojkoski.com</span>
+				</div>
 			</div>
 			<form className='space-y-4 w-full' action="https://formspree.io/f/mpzepovz" method="POST">
 				<div>
