@@ -24,8 +24,8 @@ const Blog: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
 						blogPosts.data.map((blogPost, blogPostIdx) => (
 							<Link key={blogPostIdx} href={`/blog/${blogPost.attributes.slug}`} className="text-gray-700 hover:underline" data-hover>
 								<div className='bg-white shadow-lg p-5'>
-									<h2 className='text-black text-2xl font-bold'>{blogPost.attributes.title}</h2>
-									<p className='text-gray-500'>{blogPost.attributes.short}</p>
+									<h2 className='text-black text-2xl font-heading font-bold'>{blogPost.attributes.title}</h2>
+									<p className='text-gray-700 text-lg'>{blogPost.attributes.short}</p>
 								</div>
 							</Link>
 						))

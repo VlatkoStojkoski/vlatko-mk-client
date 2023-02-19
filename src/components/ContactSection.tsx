@@ -55,7 +55,7 @@ const ContactSection = () => {
 						rows={5}
 						className={`block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-sm border border-gray-300
 												focus:ring-primary-500 focus:border-primary-500`}
-						placeholder='Leave a comment...'></textarea>
+						placeholder='Leave your message...'></textarea>
 				</div>
 				<button
 					type='submit'

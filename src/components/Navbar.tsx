@@ -53,7 +53,7 @@ const Navbar: React.FC = () => {
 							<li key={index} data-hover>
 								<Link 
 									href={item.href} 
-									className={item.name === navbar.active ? 'font-bold' : ''} 
+									className={item.name === navbar.active ? 'font-bold' : 'font-normal'} 
 									onClick={() => {
 										setNavbar((prev) => ({ ...prev, active: item.name }));
 										router.events.emit('routeChangeComplete', item.href);

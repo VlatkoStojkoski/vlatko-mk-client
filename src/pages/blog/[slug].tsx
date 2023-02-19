@@ -26,7 +26,7 @@ const Blog: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
 
 			<main className='px-5 pt-28 pb-32 min-h-screen max-w-4xl mx-auto'>
 				<h1 className='text-4xl sm:text-5xl font-bold mb-6 underline'>{blogPost.attributes.title}</h1>
-				<div>
+				<div id='blog-content'>
 					{
 						JSON.parse(blogPost.attributes.content).blocks.map((block: any, blockIdx: number) => (
 							<div key={blockIdx}>

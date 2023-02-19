@@ -19,7 +19,7 @@ const HomeSection = (props: React.DetailedHTMLProps<React.HTMLAttributes<HTMLEle
 				<Link href='/#contact' className='text-2xl font-bold text-blue-500 hover:text-blue-600' scroll={false}>
 					<button 
 						type='button' 
-						className={`bg-white text-toucan-900 border-toucan-900 border-2 text-base text-center px-5 py-2.5
+						className={`bg-white text-toucan-900 border-toucan-900 border-2 text-lg text-center px-5 py-2.5
 												hover:translate-x-[4px] hover:translate-y-[4px] shadow-brutal filter-none
 												hover:shadow-brutal-closer hover:bg-neutral-200`}
 						onMouseOver={() => setPointer('filled')}

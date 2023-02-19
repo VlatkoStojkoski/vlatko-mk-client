@@ -2,20 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('/assets/fonts/font-faces.css');
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://pub-61354bbe2d54481fb429c458222642a9.r2.dev/fonts/font-faces.css');
+// @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,700;1,400&display=swap');
+
+// @import url('https://fonts.bunny.net/css?family=merriweather:400,400i,700|oswald:400,700');
 
 html {
 	scroll-behavior: smooth;
 	scroll-padding-top: 4rem;
-	font-family: 'M Ying Hei PRC', sans-serif;
+	font-family: 'Korataki', sans-serif;
 }
 
-p,
+button,
+label,
+input,
+textarea,
+select,
+a,
+p {
+	font-family: 'Blur', sans-serif;
+}
+
 button,
 label,
 a {
-	font-family: 'Modernist', sans-serif;
+	font-weight: 300;
 }
 
 @media only screen and (max-width: 768px) {
@@ -37,4 +48,9 @@ a {
 	*:hover {
 		cursor: none;
 	}
+}
+
+#blog-content a {
+	color: #c0c0cf;
+	text-decoration: underline;
 }
