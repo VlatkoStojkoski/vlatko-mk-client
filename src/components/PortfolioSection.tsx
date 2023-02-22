@@ -15,25 +15,26 @@ const PortfolioSection: React.FC<{
 } & React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>> = 
 	({projects, tags, ...rest}) => {
 		const { mutate: getByTags, data: projectsByTags } = trpc.projects.getBySlugs.useMutation();
-		const [ selectedTags, setSelectedTags ] = useState<string | null>(null);
+		const [ selectedTags, setSelectedTags ] = useState<string[] | null>(null);
 
 		return (
 			<section id='portfolio' className='min-h-screen py-5' {...rest}>
-				<h1 className='text-4xl font-semibold mb-2'>Portfolio</h1>
+				<h1 className='text-4xl font-semibold mb-3'>Portfolio</h1>
 				<select
-					className={`block text-[#fff] rounded-[5px] text-lg p-1 px-3
-						bg-toucan-800
+					className={`block text-[#fff] rounded-[5px] text-lg p-1 px-3 bg-toucan-800 active:bg-toucan-900
 						shadow-[inset_2px_2px_3px_rgba(255,255,255,0.6),inset_-2px_-2px_3px_rgba(0,0,0,0.6)]`}
 					style={{
 						backgroundImage: 'linear-gradient(to top left,rgba(0,0,0,0.2),rgba(0,0,0,0.2) 30%,rgba(0,0,0,0))',
 					}}
 					onChange={e => {
-						const tags = e.target.value;
-						setSelectedTags(tags);
+						const selectedTag = e.target.value;
+						const currSelectedTags = [...(selectedTags || []), selectedTag];
+						setSelectedTags(currSelectedTags);
 						getByTags({
-							tags: [tags],
+							tags: currSelectedTags || [],
 						});
 					}}>
+					<option value=''>Select a tag...</option>
 					{
 						tags &&
 						tags.data.map(({attributes}, tagIdx) => (
@@ -41,7 +42,25 @@ const PortfolioSection: React.FC<{
 						))
 					}
 				</select>
-				<div className='mt-5' style={{
+				{
+					selectedTags && (
+						<div className='flex flex-wrap gap-2 mt-2'>
+							{
+								selectedTags.map((tag, tagIdx) => (
+									<div
+										key={tagIdx}
+										className='flex items-center gap-2 px-3 py-1 rounded-lg bg-toucan-800 text-white'
+										style={{
+											backgroundImage: 'linear-gradient(to top left,rgba(0,0,0,0.2),rgba(0,0,0,0.2) 30%,rgba(0,0,0,0))',
+										}}>
+										{tag}	
+									</div>
+								))
+							}
+						</div>
+					)
+				}
+				<div className='mt-8' style={{
 					display: 'grid',
 					gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
 					gridGap: '16px',
