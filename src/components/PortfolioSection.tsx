@@ -53,7 +53,20 @@ const PortfolioSection: React.FC<{
 										style={{
 											backgroundImage: 'linear-gradient(to top left,rgba(0,0,0,0.2),rgba(0,0,0,0.2) 30%,rgba(0,0,0,0))',
 										}}>
-										{tag}	
+										{tag}
+										<svg className='ml-1' width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" data-hover
+											onClick={
+												() => {
+													const currSelectedTags = [...selectedTags];
+													currSelectedTags.splice(tagIdx, 1);
+													setSelectedTags(currSelectedTags);
+													getByTags({
+														tags: currSelectedTags || [],
+													});
+												}
+											}>
+											<path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+										</svg>	
 									</div>
 								))
 							}
