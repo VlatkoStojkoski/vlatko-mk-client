@@ -39,7 +39,7 @@ const projectsDataScheme = z.object({
 	data: z.array(projectScheme),
 });
 
-export const getProjects = async ({ axios }: { axios: AxiosInstance }) => {
+export const getProjects = async ({ axios, query: qsQuery }: { axios: AxiosInstance, query?: any }) => {
 	let data: unknown | null = null;
 
 	try {
@@ -47,6 +47,7 @@ export const getProjects = async ({ axios }: { axios: AxiosInstance }) => {
 			{
 				populate: '*',
 				sort: 'priority:asc',
+				...(qsQuery || {}),
 			},
 			{
 				encodeValuesOnly: true,
@@ -111,7 +112,9 @@ export const projectsRouter = router({
 			let data: ZodInfer<typeof projectsDataScheme> | null = null;
 
 			try {
-				data = await getProjects({ axios: ctx.axios });
+				data = await getProjects({
+					axios: ctx.axios,
+				});
 				return data;
 			} catch (error) {
 				console.error(error);
@@ -120,12 +123,36 @@ export const projectsRouter = router({
 				};
 			}
 		}),
-	getById: publicProcedure
-		.input(z.object({ id: z.string() }))
-		.query(({ input }) => {
-			return {
-				greeting: 'Hello, World!',
-				id: input.id,
-			};
+	getBySlugs: publicProcedure
+		.input(z.object({
+			tags: z.array(z.string()),
+		}))
+		.mutation(async ({ ctx, input }) => {
+			let data: ZodInfer<typeof projectsDataScheme> | null = null;
+
+			try {
+				data = await getProjects({
+					axios: ctx.axios,
+					query: {
+						filters: {
+							tags: {
+								$or: [
+									...input.tags.map((tag: string) => ({
+										name: {
+											$eq: tag,
+										},
+									})),
+								],
+							},
+						},
+					},
+				});
+				return data;
+			} catch (error) {
+				console.error(error);
+				return {
+					data: [],
+				};
+			}
 		}),
 });

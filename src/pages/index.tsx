@@ -10,7 +10,7 @@ import HomeSection from 'components/HomeSection';
 import PortfolioSection from 'components/PortfolioSection';
 import { trpcClient } from 'utils/trpc';
 
-const Home: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({projects}) => {
+const Home: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({projects, tags}) => {
 	return (
 		<>
 			<Head>
@@ -26,7 +26,7 @@ const Home: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
 			<main className='px-5'>
 				<HomeSection />
 
-				<PortfolioSection projects={projects} />
+				<PortfolioSection projects={projects} tags={tags} />
 
 				<ContactSection />
 			</main>
@@ -35,11 +35,13 @@ const Home: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
 };
 
 export const getServerSideProps = async () => {
-	const data = await trpcClient.projects.getAll.query();
+	const projects = await trpcClient.projects.getAll.query();
+	const tags = await trpcClient.tags.getAll.query();
 
 	return {
 		props: {
-			projects: data,
+			projects,
+			tags,
 		},
 	};
 };
