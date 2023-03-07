@@ -2,7 +2,7 @@ import React from 'react';
 
 import Image from 'next/image';
 
-const CreepyImage = () => {
+const CreepyImage: React.FC<React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>> = (props) => {
 	const leftEye = React.useRef<HTMLDivElement>(null);
 	const rightEye = React.useRef<HTMLDivElement>(null);
 	const container = React.useRef<HTMLDivElement>(null);
@@ -53,7 +53,7 @@ const CreepyImage = () => {
 	}, []);
 
 	return (
-		<div className='creepy-image-container fixed -bottom-0 left-0 z-20 overflow-hidden aspect-square md:w-64 transition-all' ref={container}>
+		<div className='creepy-image-container fixed -bottom-0 left-0 z-20 overflow-hidden aspect-square md:w-64 transition-all' ref={container} {...props}>
 			<div
 				className='absolute bottom-0 left-1/2 -translate-x-1/2 z-[22] h-1/2 w-5/6'
 				ref={hoverElement}>

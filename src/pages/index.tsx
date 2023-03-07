@@ -8,6 +8,7 @@ import ContactSection from 'components/ContactSection';
 import CreepyImage from 'components/CreepyImage';
 import HomeSection from 'components/HomeSection';
 import PortfolioSection from 'components/PortfolioSection';
+import Socials from 'components/Socials';
 import { trpcClient } from 'utils/trpc';
 
 const Home: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({projects, tags}) => {
@@ -22,6 +23,8 @@ const Home: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
 			</Head>
 
 			<CreepyImage />
+
+			<Socials />
 
 			<main className='px-5'>
 				<HomeSection />
